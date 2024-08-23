@@ -55,17 +55,13 @@ body {
   top: 0;
   left: 0;
   z-index: 999;
-  padding: 20px 0 10px;
-  overflow: auto;
+  padding: 20px 0 0;
   margin-left: -100%;
   transition: margin-left 0.4s;
   -webkit-transition: margin-left 0.4s;
   -moz-transition: margin-left 0.4s;
   -ms-transition: margin-left 0.4s;
   -o-transition: margin-left 0.4s;
-}
-#content::-webkit-scrollbar {
-  display: none;
 }
 #content i {
   color: var(--white);
@@ -75,11 +71,15 @@ body {
 #content hr {
   border: 1px solid var(--white);
 }
-#content > div {
+#content-details {
+  overflow: auto;
+  height: calc(100% - 27px);
+}
+#content-details::-webkit-scrollbar {
+  display: none;
+}
+#content-details > div {
   width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   color: var(--white);
   padding: 10px 15px;
   cursor: pointer;
@@ -89,14 +89,31 @@ body {
   -ms-transition: background-color 0.2s;
   -o-transition: background-color 0.2s;
 }
-#content > div:hover {
+#content-details > div:hover {
   background-color: #ff4d4d;
 }
-#content > div div p:nth-child(1) {
+#content-details > div div p:nth-child(1) {
   font-size: 18px;
 }
-#content > div div p:nth-child(2) {
+#content-details > div div p:nth-child(2) {
   font-size: 14px;
+}
+.content-name {
+  font-size: 20px;
+}
+.content-artist {
+  font-size: 12px;
+}
+.content-duration {
+  font-size: 16px;
+}
+.track-details {
+  display: grid;
+  grid-template-columns: 35px 1fr auto;
+  align-items: center;
+}
+.track-details span {
+  font-size: 20px;
 }
 .from {
   width: fit-content;
