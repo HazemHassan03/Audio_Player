@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Audio Player</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="css/all.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Righteous&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <i class="fa-solid fa-bars"></i>
+        <div class="from">
+          <a href="https://mp3quran.net" target="_blank">From mp3quran.net</a>
+          <i class="fa-solid fa-up-right-from-square"></i>
+        </div>
+      </div>
+      <div id="content">
+        <i class="fa-solid fa-arrow-left"></i>
+      </div>
+      <div id="cd">
+        <i class="fa-solid fa-compact-disc"></i>
+      </div>
+      <div class="details">
+        <div id="index">Audio #1 of 5</div>
+        <h1 id="track-name" class="name">Track Name</h1>
+        <h2 id="track-artist" class="name">Track Artist</h2>
+      </div>
+      <div class="length">
+        <span id="current-length">00:00</span>
+        <input type="range" name="length" id="length" value="0" />
+        <span id="all-length">00:00</span>
+      </div>
+      <div class="volume">
+        <i id="mute" class="fa-solid fa-volume-high"></i>
+        <input type="range" name="volume" id="volume" value="100" />
+        <span id="volume-value">00</span>
+      </div>
+      <div class="options">
+        <i id="shuffle" class="fa-solid fa-shuffle"></i>
+        <i id="prev" class="fa-solid fa-backward-step"></i>
+        <div id="play" class="play">
+          <i class="fa-solid fa-play"></i>
+        </div>
+        <i id="next" class="fa-solid fa-forward-step"></i>
+        <i id="replay" class="fa-solid fa-rotate-right"></i>
+      </div>
+      <a
+        class="copyright"
+        href="https://www.linkedin.com/in/hazemhassan03/"
+        target="_blank"
+        ><img
+          src="https://drive.google.com/thumbnail?id=1LtQCylF2GUkxPBmzKLh0bNUO73jUJBJn"
+          alt="My logo"
+      /></a>
+    </div>
+    <audio id="audio"></audio>
+    <script src="js/script.js"></script>
+  </body>
+</html>
