@@ -1,4 +1,5 @@
 let content = document.getElementById("content");
+let contentDetails = document.getElementById("content-details");
 let displayContent = document.querySelector(".header i");
 let back = document.querySelector("#content i");
 let cd = document.querySelector("#cd i");
@@ -110,6 +111,9 @@ for (let i = 0; i < data.length; i++) {
   div.setAttribute("data-index", i);
   let childDiv = document.createElement("div");
   div.append(childDiv);
+  let number = document.createElement("span");
+  let numberText = document.createTextNode(i + 1);
+  number.append(numberText);
   let trackName = document.createElement("p");
   let trackArtist = document.createElement("p");
   let trackNameText = document.createTextNode(data[i].name);
@@ -119,16 +123,17 @@ for (let i = 0; i < data.length; i++) {
   trackName.classList.add("content-name");
   trackArtist.classList.add("content-artist");
   trackName.style.marginBottom = "5px";
-  trackArtist.style.opacity = "0.9";
+  trackArtist.style.opacity = "0.8";
   let duration = document.createElement("p");
   let durationText = document.createTextNode(data[i].len);
-  trackArtist.classList.add("content-duration");
+  duration.classList.add("content-duration");
   duration.append(durationText);
   childDiv.append(trackName, trackArtist);
-  div.append(childDiv, duration);
-  content.append(div);
+  div.append(number, childDiv, duration);
+  div.classList.add("track-details");
+  contentDetails.append(div);
   if (i < data.length - 1) {
-    content.append(document.createElement("hr"));
+    contentDetails.append(document.createElement("hr"));
   }
 }
 
