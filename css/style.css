@@ -62,10 +62,11 @@ body {
   -moz-transition: margin-left 0.4s;
   -ms-transition: margin-left 0.4s;
   -o-transition: margin-left 0.4s;
+  overflow: hidden;
 }
 #content i {
   color: var(--white);
-  margin: 5px 0 5px 15px;
+  margin: 5px 0 10px 15px;
   cursor: pointer;
 }
 #content hr {
@@ -73,7 +74,7 @@ body {
 }
 #content-details {
   overflow: auto;
-  height: calc(100% - 27px);
+  height: calc(100% - 31px);
 }
 #content-details::-webkit-scrollbar {
   display: none;
@@ -367,6 +368,9 @@ input[type="range"]::-moz-range-thumb {
   }
   .content-duration {
     font-size: 20px;
+  }
+  #content-details {
+    height: calc(100% - 46px);
   }
   #cd i {
     font-size: 30vh;
