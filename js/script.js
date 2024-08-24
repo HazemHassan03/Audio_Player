@@ -136,7 +136,6 @@ for (let i = 0; i < data.length; i++) {
     contentDetails.append(document.createElement("hr"));
   }
 }
-
 displayContent.addEventListener("click", () => {
   content.style.marginLeft = "0";
 });
@@ -151,11 +150,55 @@ let isAutoReplay = false;
 let isMute = false;
 let isShuffling = false;
 let random;
+let volumeRangeValue;
+let playList = document.querySelectorAll("#content-details > div");
+let loop = document.createAttribute("loop");
 
-let playList = document.querySelectorAll("#content > div");
+if (localStorage.getItem("Current Audio")) {
+  index = parseInt(localStorage.getItem("Current Audio"));
+  load(index);
+}
+if (localStorage.getItem("Mute")) {
+  isMute = localStorage.getItem("Mute") === "true" ? true : false;
+}
+if (localStorage.getItem("Volume range value")) {
+  volumeRangeValue = parseFloat(localStorage.getItem("Volume range value"));
+}
+if (localStorage.getItem("Volume value")) {
+  audio.volume = parseFloat(localStorage.getItem("Volume value"));
+  volumeRange.value = Math.trunc(
+    parseFloat(localStorage.getItem("Volume value")) * 100
+  );
+  volumeValue.textContent = Math.trunc(volumeRange.value);
+  if (audio.volume == 0) {
+    muteVolume.setAttribute("class", "fa-solid fa-volume-mute");
+  }
+}
+if (localStorage.getItem("Audio Length")) {
+  audio.currentTime = parseFloat(localStorage.getItem("Audio Length"));
+  lengthRange.value = Math.trunc(
+    parseFloat(localStorage.getItem("Audio Length"))
+  );
+  updateTime(parseFloat(localStorage.getItem("Audio Length")));
+}
+if (localStorage.getItem("Auto Replay")) {
+  if (localStorage.getItem("Auto Replay") === "true") {
+    autoReplayTrack();
+  } else {
+    doNotAutoReplayTrack();
+  }
+}
+if (localStorage.getItem("Shuffle")) {
+  if (localStorage.getItem("Shuffle") === "true") {
+    shuffleTrack();
+  } else {
+    doNotShuffle();
+  }
+}
+
 playList.forEach((track) => {
   track.addEventListener("click", () => {
-    index = track.getAttribute("data-index");
+    index = parseInt(track.getAttribute("data-index"));
     backContent();
     load(index);
     playTrack();
@@ -173,7 +216,8 @@ function turnLengthIntoSeconds(length) {
 }
 function updateLengthRange() {
   setInterval(() => {
-    lengthRange.value = audio.currentTime;
+    lengthRange.value = Math.trunc(audio.currentTime);
+    localStorage.setItem("Audio Length", audio.currentTime);
   }, 1000);
 }
 function updateTime(currentTime) {
@@ -190,6 +234,13 @@ function playTrack() {
   updateLengthRange();
   setInterval(() => {
     updateTime(audio.currentTime);
+    if (isPlaying && audio.currentTime == 0) {
+      document.getElementById("loading").style.display = "flex";
+      document.getElementById("copyright").style.display = "none";
+    } else {
+      document.getElementById("loading").style.display = "none";
+      document.getElementById("copyright").style.display = "block";
+    }
   }, 1000);
   cd.style.cssText = "animation-play-state: running;";
 }
@@ -207,6 +258,7 @@ function load(index) {
   lengthRange.setAttribute("max", turnLengthIntoSeconds(data[index].len));
   indexDetails.textContent = `Audio #${index + 1} of ${data.length}`;
   audio.load();
+  localStorage.setItem("Current Audio", index);
 }
 load(index);
 play.addEventListener("click", checkPlay);
@@ -215,7 +267,6 @@ function checkMute() {
 }
 
 volumeValue.textContent = audio.volume * 100;
-let volumeRangeValue;
 function mute() {
   muteVolume.setAttribute("class", "fa-solid fa-volume-mute");
   volumeRangeValue = volumeRange.value;
@@ -223,6 +274,9 @@ function mute() {
   volumeValue.textContent = volumeRange.value;
   audio.volume = 0;
   isMute = true;
+  localStorage.setItem("Volume value", audio.volume);
+  localStorage.setItem("Volume range value", volumeRangeValue);
+  localStorage.setItem("Mute", isMute);
 }
 function unMute() {
   muteVolume.setAttribute("class", "fa-solid fa-volume-high");
@@ -230,25 +284,39 @@ function unMute() {
   audio.volume = volumeRangeValue / 100;
   volumeValue.textContent = volumeRange.value;
   isMute = false;
+  localStorage.setItem("Volume value", audio.volume);
+  localStorage.setItem("Mute", isMute);
 }
 muteVolume.addEventListener("click", checkMute);
 volumeRange.addEventListener("input", () => {
-  muteVolume.setAttribute("class", "fa-solid fa-volume-high");
-  audio.volume = volumeRange.value / 100;
-  volumeValue.textContent = Math.trunc(audio.volume * 100);
+  if (volumeRange.value == 0) {
+    mute();
+  } else {
+    muteVolume.setAttribute("class", "fa-solid fa-volume-high");
+    audio.volume = volumeRange.value / 100;
+    volumeValue.textContent = Math.trunc(audio.volume * 100);
+  }
+  localStorage.setItem("Volume value", audio.volume);
 });
 lengthRange.addEventListener("input", () => {
   audio.currentTime = lengthRange.value;
+  localStorage.setItem("Audio Length", audio.currentTime);
   playTrack();
   audio.addEventListener("ended", () => {
     return 0;
   });
 });
 
+function resetTime() {
+  audio.currentTime = 0;
+  lengthRange.value = 0;
+  currentLength.textContent = "00:00";
+  localStorage.setItem("Audio Length", 0);
+}
 function nextTrack() {
-  if (random) {
+  resetTime();
+  if (isShuffling) {
     randomNumber();
-    console.log(random - 1);
     index = random - 1;
   } else {
     if (index === data.length - 1) {
@@ -261,31 +329,40 @@ function nextTrack() {
   if (isPlaying) playTrack();
 }
 next.addEventListener("click", nextTrack);
-
 function previousTrack() {
-  if (index === 0) {
-    index = data.length - 1;
+  resetTime();
+  if (isShuffling) {
+    randomNumber();
+    index = random - 1;
   } else {
-    --index;
+    if (index === 0) {
+      index = data.length - 1;
+    } else {
+      --index;
+    }
   }
   load(index);
+  if (isPlaying) playTrack();
 }
 prev.addEventListener("click", previousTrack);
-
 audio.addEventListener("ended", nextTrack);
+
 function checkAutoReplay() {
   isAutoReplay ? doNotAutoReplayTrack() : autoReplayTrack();
 }
-let loop = document.createAttribute("loop");
 function autoReplayTrack() {
   isAutoReplay = true;
   autoReplay.classList.add("active", "rotate360");
   audio.setAttributeNode(loop);
+  localStorage.setItem("Auto Replay", isAutoReplay);
 }
 function doNotAutoReplayTrack() {
   isAutoReplay = false;
   autoReplay.classList.remove("active");
-  audio.removeAttributeNode(loop);
+  if (audio.hasAttribute("loop")) {
+    audio.removeAttributeNode(loop);
+  }
+  localStorage.setItem("Auto Replay", isAutoReplay);
 }
 autoReplay.addEventListener("click", checkAutoReplay);
 
@@ -296,11 +373,13 @@ function shuffleTrack() {
   isShuffling = true;
   shuffle.classList.add("active");
   randomNumber();
+  localStorage.setItem("Shuffle", isShuffling);
 }
 function doNotShuffle() {
   isShuffling = false;
   shuffle.classList.remove("active");
   random = undefined;
+  localStorage.setItem("Shuffle", isShuffling);
 }
 function randomNumber() {
   random = Math.ceil(Math.random() * data.length);
