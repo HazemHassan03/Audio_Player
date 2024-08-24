@@ -76,11 +76,6 @@ body {
   overflow: auto;
   height: calc(100% - 31px);
   scroll-behavior: smooth;
-  transition: scroll 1s;
-  -webkit-transition: scroll 1s;
-  -moz-transition: scroll 1s;
-  -ms-transition: scroll 1s;
-  -o-transition: scroll 1s;
 }
 #content-details::-webkit-scrollbar {
   display: none;
