@@ -75,6 +75,12 @@ body {
 #content-details {
   overflow: auto;
   height: calc(100% - 31px);
+  scroll-behavior: smooth;
+  transition: scroll 1s;
+  -webkit-transition: scroll 1s;
+  -moz-transition: scroll 1s;
+  -ms-transition: scroll 1s;
+  -o-transition: scroll 1s;
 }
 #content-details::-webkit-scrollbar {
   display: none;
@@ -310,15 +316,60 @@ input[type="range"]::-moz-range-thumb {
 .active {
   color: var(--color2);
 }
-.copyright {
+.inf {
+  margin-bottom: 10px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#copyright {
   display: block;
   width: fit-content;
   margin: auto;
-  margin-bottom: 10px;
   width: 100px;
 }
-.copyright img {
+#copyright img {
   max-width: 100%;
+}
+#loading {
+  display: none;
+  margin: auto;
+}
+@keyframes loading-animation {
+  to {
+    transform: translate(0, -15px);
+    -webkit-transform: translate(0, -15px);
+    -moz-transform: translate(0, -15px);
+    -ms-transform: translate(0, -15px);
+    -o-transform: translate(0, -15px);
+    opacity: 25%;
+  }
+}
+.load {
+  display: flex;
+  justify-content: center;
+}
+.load div {
+  width: 20px;
+  height: 20px;
+  margin: 0 5px;
+  background-color: var(--white);
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+  animation-name: loading-animation;
+  animation-duration: 0.3s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+.two {
+  animation-delay: 0.1s;
+}
+.three {
+  animation-delay: 0.2s;
 }
 @media (max-width: 767px) {
   :root {
@@ -427,9 +478,14 @@ input[type="range"]::-moz-range-thumb {
     height: 15px;
     width: 15px;
   }
-  .copyright {
-    margin: 0;
+  .inf {
     margin-bottom: 20px;
+  }
+  #copyright {
+    margin: 0;
     width: 150px;
+  }
+  #loading {
+    margin: 0;
   }
 }
