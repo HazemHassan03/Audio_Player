@@ -1,23 +1,23 @@
-let content = document.getElementById("content");
-let contentDetails = document.getElementById("content-details");
-let displayContent = document.querySelector(".header i");
-let back = document.querySelector("#content i");
-let cd = document.querySelector("#cd i");
-let indexDetails = document.getElementById("index");
-let trackName = document.getElementById("track-name");
-let trackArtist = document.getElementById("track-artist");
-let currentLength = document.getElementById("current-length");
-let allLength = document.getElementById("all-length");
-let lengthRange = document.getElementById("length");
-let muteVolume = document.getElementById("mute");
-let volumeRange = document.getElementById("volume");
-let volumeValue = document.getElementById("volume-value");
-let shuffle = document.getElementById("shuffle");
-let prev = document.getElementById("prev");
-let play = document.getElementById("play");
-let next = document.getElementById("next");
-let autoReplay = document.getElementById("replay");
-let audio = document.getElementById("audio");
+let content = document.getElementById("content"),
+  contentDetails = document.getElementById("content-details"),
+  displayContent = document.querySelector(".header i"),
+  back = document.querySelector("#content i"),
+  cd = document.querySelector("#cd i"),
+  indexDetails = document.getElementById("index"),
+  trackName = document.getElementById("track-name"),
+  trackArtist = document.getElementById("track-artist"),
+  currentLength = document.getElementById("current-length"),
+  allLength = document.getElementById("all-length"),
+  lengthRange = document.getElementById("length"),
+  muteVolume = document.getElementById("mute"),
+  volumeRange = document.getElementById("volume"),
+  volumeValue = document.getElementById("volume-value"),
+  shuffle = document.getElementById("shuffle"),
+  prev = document.getElementById("prev"),
+  play = document.getElementById("play"),
+  next = document.getElementById("next"),
+  autoReplay = document.getElementById("replay"),
+  audio = document.getElementById("audio");
 
 let data = [
   {
@@ -144,15 +144,15 @@ function backContent() {
 }
 back.addEventListener("click", backContent);
 
-let index = 0;
-let isPlaying = false;
-let isAutoReplay = false;
-let isMute = false;
-let isShuffling = false;
-let random;
-let volumeRangeValue;
-let playList = document.querySelectorAll("#content-details > div");
-let loop = document.createAttribute("loop");
+let index = 0,
+  isPlaying = false,
+  isAutoReplay = false,
+  isMute = false,
+  isShuffling = false,
+  random,
+  volumeRangeValue,
+  playList = document.querySelectorAll("#content-details > div"),
+  loop = document.createAttribute("loop");
 
 if (localStorage.getItem("Current Audio")) {
   index = parseInt(localStorage.getItem("Current Audio"));
