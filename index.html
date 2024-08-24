@@ -43,7 +43,7 @@
       <div class="volume">
         <i id="mute" class="fa-solid fa-volume-high"></i>
         <input type="range" name="volume" id="volume" value="100" />
-        <span id="volume-value">00</span>
+        <span id="volume-value">0</span>
       </div>
       <div class="options">
         <i id="shuffle" class="fa-solid fa-shuffle"></i>
@@ -54,14 +54,21 @@
         <i id="next" class="fa-solid fa-forward-step"></i>
         <i id="replay" class="fa-solid fa-rotate-right"></i>
       </div>
-      <a
-        class="copyright"
-        href="https://www.linkedin.com/in/hazemhassan03/"
-        target="_blank"
-        ><img
-          src="https://drive.google.com/thumbnail?id=1LtQCylF2GUkxPBmzKLh0bNUO73jUJBJn"
-          alt="My logo"
-      /></a>
+      <div class="inf">
+        <a
+          id="copyright"
+          href="https://www.linkedin.com/in/hazemhassan03/"
+          target="_blank"
+          ><img
+            src="https://drive.google.com/thumbnail?id=1LtQCylF2GUkxPBmzKLh0bNUO73jUJBJn"
+            alt="My logo"
+        /></a>
+        <div class="load" id="loading">
+          <div class="one"></div>
+          <div class="two"></div>
+          <div class="three"></div>
+        </div>
+      </div>
     </div>
     <audio id="audio"></audio>
     <script src="js/script.js"></script>
