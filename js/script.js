@@ -237,12 +237,15 @@ function playTrack() {
     if (isPlaying && audio.currentTime == 0) {
       document.getElementById("loading").style.display = "flex";
       document.getElementById("copyright").style.display = "none";
+      cd.style.cssText = "animation-play-state: paused;";
     } else {
       document.getElementById("loading").style.display = "none";
       document.getElementById("copyright").style.display = "block";
+      if (isPlaying && audio.currentTime != 0) {
+        cd.style.cssText = "animation-play-state: running;";
+      }
     }
   }, 1000);
-  cd.style.cssText = "animation-play-state: running;";
 }
 function pauseTrack() {
   isPlaying = false;
