@@ -290,13 +290,14 @@ function unMute() {
 }
 muteVolume.addEventListener("click", checkMute);
 volumeRange.addEventListener("input", () => {
+  muteVolume.setAttribute("class", "fa-solid fa-volume-high");
+  audio.volume = volumeRange.value / 100;
+  volumeValue.textContent = Math.trunc(audio.volume * 100);
+  isMute = false;
   if (volumeRange.value == 0) {
     mute();
-  } else {
-    muteVolume.setAttribute("class", "fa-solid fa-volume-high");
-    audio.volume = volumeRange.value / 100;
-    volumeValue.textContent = Math.trunc(audio.volume * 100);
   }
+  localStorage.setItem("Mute", isMute);
   localStorage.setItem("Volume value", audio.volume);
 });
 lengthRange.addEventListener("input", () => {
