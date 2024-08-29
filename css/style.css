@@ -344,26 +344,24 @@ input[type="range"]::-moz-range-thumb {
 .load {
   display: flex;
   justify-content: center;
+  column-gap: 10px;
 }
 .load div {
   width: 20px;
   height: 20px;
-  margin: 0 5px;
   background-color: var(--white);
   border-radius: 50%;
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
   -ms-border-radius: 50%;
   -o-border-radius: 50%;
-  animation-name: loading-animation;
-  animation-duration: 0.3s;
-  animation-iteration-count: infinite;
-  animation-direction: alternate;
+  animation: loading-animation 0.3s infinite alternate;
+  -webkit-animation: loading-animation 0.3s infinite alternate;
 }
-.two {
+.load div.two {
   animation-delay: 0.1s;
 }
-.three {
+.load div.three {
   animation-delay: 0.2s;
 }
 @media (max-width: 767px) {
