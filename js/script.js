@@ -215,10 +215,8 @@ function turnLengthIntoSeconds(length) {
   return min * 60 + sec;
 }
 function updateLengthRange() {
-  setInterval(() => {
-    lengthRange.value = Math.trunc(audio.currentTime);
-    localStorage.setItem("Audio Length", audio.currentTime);
-  }, 1000);
+  lengthRange.value = Math.trunc(audio.currentTime);
+  localStorage.setItem("Audio Length", audio.currentTime);
 }
 function updateTime(currentTime) {
   let sec = Math.trunc(currentTime % 60);
@@ -226,25 +224,25 @@ function updateTime(currentTime) {
   currentLength.textContent = `${min < 10 ? `0${min}` : min}:${
     sec < 10 ? `0${sec}` : sec
   }`;
+  if (isPlaying && audio.currentTime == 0) {
+    document.getElementById("loading").style.display = "flex";
+    document.getElementById("copyright").style.display = "none";
+    cd.style.cssText = "animation-play-state: paused;";
+  } else {
+    document.getElementById("loading").style.display = "none";
+    document.getElementById("copyright").style.display = "block";
+    if (isPlaying && audio.currentTime != 0) {
+      cd.style.cssText = "animation-play-state: running;";
+    }
+  }
 }
 function playTrack() {
   isPlaying = true;
   audio.play();
   play.innerHTML = `<i class="fa-solid fa-pause"></i>`;
-  updateLengthRange();
   setInterval(() => {
+    updateLengthRange();
     updateTime(audio.currentTime);
-    if (isPlaying && audio.currentTime == 0) {
-      document.getElementById("loading").style.display = "flex";
-      document.getElementById("copyright").style.display = "none";
-      cd.style.cssText = "animation-play-state: paused;";
-    } else {
-      document.getElementById("loading").style.display = "none";
-      document.getElementById("copyright").style.display = "block";
-      if (isPlaying && audio.currentTime != 0) {
-        cd.style.cssText = "animation-play-state: running;";
-      }
-    }
   }, 1000);
 }
 function pauseTrack() {
@@ -304,7 +302,11 @@ volumeRange.addEventListener("input", () => {
 lengthRange.addEventListener("input", () => {
   audio.currentTime = lengthRange.value;
   localStorage.setItem("Audio Length", audio.currentTime);
-  playTrack();
+  if (isPlaying) {
+    playTrack();
+  } else {
+    updateTime(audio.currentTime);
+  }
   audio.addEventListener("ended", () => {
     return 0;
   });
