@@ -162,7 +162,7 @@ if (localStorage.getItem("Mute")) {
   isMute = localStorage.getItem("Mute") === "true" ? true : false;
 }
 if (localStorage.getItem("Volume range value")) {
-  volumeRangeValue = parseInt(localStorage.getItem("Volume range value"));
+  volumeRangeValue = Math.trunc(parseFloat(localStorage.getItem("Volume range value"));)
 }
 if (localStorage.getItem("Volume value")) {
   audio.volume = parseFloat(localStorage.getItem("Volume value"));
