@@ -1,4 +1,4 @@
-# CodeAlpha_Audio_Player
+# Audio Player
 I have created an audio player using HTML, CSS, and JavaScript. It includes the following features:
 
 1. Play and pause the track.
